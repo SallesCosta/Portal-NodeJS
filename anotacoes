@@ -1,0 +1,2 @@
+se usar '<%=' a tag <p> vai ser interpretada como string.. entao saira assim: <p>meu texto</p>
+se usar '<%-' a tag <p> vai ser interpretada como tag do html.. entao saira assim: meu texto     
