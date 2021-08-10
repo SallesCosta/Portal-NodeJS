@@ -1,3 +1,4 @@
+// yarn add express ejs mongoose    
 const express = require('express');
 const mongoose = require('mongoose');
 var bodyParser = require('body-parser')
