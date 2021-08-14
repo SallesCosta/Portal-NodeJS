@@ -9,9 +9,17 @@ const app = express();
 
 const Posts = require('./Posts.js');
 
-mongoose.connect('SEUSDADOSAQUI', { useNewUrlParser: true, useUnifiedTopology: true }).then(function () {
-    console.log('Conectado com sucesso');
-}).catch(function (err) {
+const mdpDB = 'sgiNHFdvvO5FmZz7';
+const nomeDB = 'node';
+
+mongoose.connect('mongodb+srv://root:' + mdpDB + '@cluster0.wkubl.mongodb.net/' + nomeDB + '?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+    })
+    .then(()=> {
+    console.log('Conectado com DB');
+}).catch((err)=> {
     console.log(err.message);
 })
 
@@ -25,12 +33,10 @@ app.set('view engine', 'html');
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, '/pages'));
 
-
 app.get('/', (req, res) => {
     if (req.query.busca == null) {
-        Posts.find({}).sort({ '_id': -1 }).exec(function (err, posts) {
-            // console.log(posts[0]);
-            posts = posts.map(function (val) {
+        Posts.find({}).sort({ '_id': -1 }).exec((err, posts)=> {
+        posts = posts.map((val)=> {
                 return {
                     titulo: val.titulo,
                     conteudo: val.conteudo,
@@ -40,9 +46,9 @@ app.get('/', (req, res) => {
                     categoria: val.categoria
                 }
             })
-            Posts.find({}).sort({ 'views': -1 }).limit(3).exec(function (err, postsTop) {
-                // console.log(posts[0]);
-                postsTop = postsTop.map(function (val) {
+            Posts.find({}).sort({ 'views': -1 }).limit(3).exec((err, postsTop)=> {
+                 console.log(posts[0]);
+                postsTop = postsTop.map((val)=> {
                     return {
                         titulo: val.titulo,
                         conteudo: val.conteudo,
@@ -54,7 +60,7 @@ app.get('/', (req, res) => {
                     }
                 })
                 res.render('home', { posts: posts, postsTop: postsTop });
-            })
+            }) 
         })
     } else {
         Posts.find({ titulo: { $regex: req.query.busca, $options: "i" } }, function (err, posts) {
@@ -81,8 +87,8 @@ app.get('/:slug', (req, res) => {
         // console.log(resposta);
         if (resposta != null) {
             Posts.find({}).sort({ 'views': -1 }).limit(3).exec(function (err, postsTop) {
-                // console.log(posts[0]);
-                postsTop = postsTop.map(function (val) {
+                // console.log(posts[0])
+                postsTop = postsTop.map((val)=> {
                     return {
                         titulo: val.titulo,
                         conteudo: val.conteudo,
@@ -100,7 +106,8 @@ app.get('/:slug', (req, res) => {
         }
     })
 })
-
-app.listen(5000, () => {
+const porta = 5000;
+app.listen(porta, () => {
     console.log('server rodando!');
+    console.log('http://localhost:'+porta);
 })
