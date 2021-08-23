@@ -4,7 +4,6 @@
 // const path = require('path');
 // const Posts = require('./Posts.js');
 
-
 import express from 'express'
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -13,17 +12,9 @@ import Posts from './Posts.js';
 import { mdpDB, nomeDB } from './mdp.js';
 import renderFile from 'ejs';
 
-
-
-
 const app = express();
 
-// console.log(cDB)
-console.log(nomeDB)
-console.log(mdpDB)
-
-mongoose.connect('mongodb+srv://root:sgiNHFdvvO5FmZz7@cluster0.wkubl.mongodb.net/node?retryWrites=true&w=majority',
-// mongoose.connect('mongodb+srv://root:' + cDB.mdpDB + '@cluster0.wkubl.mongodb.net/' + cDB.nomeDB + '?retryWrites=true&w=majority',
+mongoose.connect('mongodb+srv://root:' + mdpDB + '@cluster0.wkubl.mongodb.net/' + nomeDB + '?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
