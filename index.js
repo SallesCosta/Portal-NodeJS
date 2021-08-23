@@ -1,4 +1,5 @@
 // yarn add express ejs mongoose    
+import { mdpDB, nomeDB } from './mdp'
 const express = require('express');
 const mongoose = require('mongoose');
 var bodyParser = require('body-parser')
@@ -9,17 +10,9 @@ const app = express();
 
 const Posts = require('./Posts.js');
 
-const mdpDB = 'sgiNHFdvvO5FmZz7';
-const nomeDB = 'node';
-
-mongoose.connect('mongodb+srv://root:' + mdpDB + '@cluster0.wkubl.mongodb.net/' + nomeDB + '?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-    })
-    .then(()=> {
-    console.log('Conectado com DB');
-}).catch((err)=> {
+mongoose.connect('mongodb+srv://root:'+ mdpDB +'@cluster0.wkubl.mongodb.net/' + nomeDB +'?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }).then(function () {
+    console.log('Conectado com sucesso');
+}).catch(function (err) {
     console.log(err.message);
 })
 
@@ -33,10 +26,12 @@ app.set('view engine', 'html');
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, '/pages'));
 
+
 app.get('/', (req, res) => {
     if (req.query.busca == null) {
-        Posts.find({}).sort({ '_id': -1 }).exec((err, posts)=> {
-        posts = posts.map((val)=> {
+        Posts.find({}).sort({ '_id': -1 }).exec(function (err, posts) {
+            // console.log(posts[0]);
+            posts = posts.map(function (val) {
                 return {
                     titulo: val.titulo,
                     conteudo: val.conteudo,
@@ -46,9 +41,9 @@ app.get('/', (req, res) => {
                     categoria: val.categoria
                 }
             })
-            Posts.find({}).sort({ 'views': -1 }).limit(3).exec((err, postsTop)=> {
-                 console.log(posts[0]);
-                postsTop = postsTop.map((val)=> {
+            Posts.find({}).sort({ 'views': -1 }).limit(3).exec(function (err, postsTop) {
+                // console.log(posts[0]);
+                postsTop = postsTop.map(function (val) {
                     return {
                         titulo: val.titulo,
                         conteudo: val.conteudo,
@@ -60,7 +55,7 @@ app.get('/', (req, res) => {
                     }
                 })
                 res.render('home', { posts: posts, postsTop: postsTop });
-            }) 
+            })
         })
     } else {
         Posts.find({ titulo: { $regex: req.query.busca, $options: "i" } }, function (err, posts) {
@@ -87,8 +82,8 @@ app.get('/:slug', (req, res) => {
         // console.log(resposta);
         if (resposta != null) {
             Posts.find({}).sort({ 'views': -1 }).limit(3).exec(function (err, postsTop) {
-                // console.log(posts[0])
-                postsTop = postsTop.map((val)=> {
+                // console.log(posts[0]);
+                postsTop = postsTop.map(function (val) {
                     return {
                         titulo: val.titulo,
                         conteudo: val.conteudo,
@@ -106,8 +101,7 @@ app.get('/:slug', (req, res) => {
         }
     })
 })
-const porta = 5000;
-app.listen(porta, () => {
+
+app.listen(5000, () => {
     console.log('server rodando!');
-    console.log('http://localhost:'+porta);
 })

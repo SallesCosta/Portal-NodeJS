@@ -106,3 +106,5 @@ dist
 # ESC
 .node_modules
 anotacoes
+.swp
+mdp.js
