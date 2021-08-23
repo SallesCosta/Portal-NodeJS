@@ -1,23 +1,24 @@
 // yarn add express ejs mongoose    
-import { mdpDB, nomeDB } from './mdp'
+// import cDB from './mdp.js'
+
+const { cDB } = require('./mdp')
 const express = require('express');
 const mongoose = require('mongoose');
-var bodyParser = require('body-parser')
-
+const bodyParser = require('body-parser')
 const path = require('path');
+const Posts = require('./Posts.js');
 
 const app = express();
 
-const Posts = require('./Posts.js');
-
-mongoose.connect('mongodb+srv://root:'+ mdpDB +'@cluster0.wkubl.mongodb.net/' + nomeDB +'?retryWrites=true&w=majority',
-{ useNewUrlParser: true,
-    useUnifiedTopology: true 
-}).then(function () {
-    console.log('Conectado com sucesso');
-}).catch(function (err) {
-    console.log(err.message);
-})
+mongoose.connect('mongodb+srv://root:' + cDB.mdpDB + '@cluster0.wkubl.mongodb.net/' + cDB.nomeDB + '?retryWrites=true&w=majority',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }).then(function () {
+        console.log('Conectado com sucesso');
+    }).catch(function (err) {
+        console.log(err.message);
+    })
 
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies

@@ -4,5 +4,6 @@
     "express": "^4.17.1",
     "mongoose": "^5.13.8",
     "nodemon": "^2.0.12"
-  }
+  },
+  "exports": "./index.js"
 }
