@@ -10,7 +10,10 @@ const app = express();
 
 const Posts = require('./Posts.js');
 
-mongoose.connect('mongodb+srv://root:'+ mdpDB +'@cluster0.wkubl.mongodb.net/' + nomeDB +'?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true }).then(function () {
+mongoose.connect('mongodb+srv://root:'+ mdpDB +'@cluster0.wkubl.mongodb.net/' + nomeDB +'?retryWrites=true&w=majority',
+{ useNewUrlParser: true,
+    useUnifiedTopology: true 
+}).then(function () {
     console.log('Conectado com sucesso');
 }).catch(function (err) {
     console.log(err.message);
