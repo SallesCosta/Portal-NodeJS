@@ -1,5 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+// const mongoose = require('mongoose');
+// const Schema = mongoose.Schema;
+
+
+
+import mongoose from 'mongoose';
+const { Schema } = mongoose
+
 
 const postSchema = new Schema({
     titulo: String,
@@ -12,4 +18,5 @@ const postSchema = new Schema({
 },{collection: 'posts'})//este postes é o nome da collection que criei no mongodb
 
 var Posts = mongoose.model("Posts",postSchema);
-module.exports = Posts;
+export default Posts
+// module.exports = Posts;
